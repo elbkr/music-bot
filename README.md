@@ -14,3 +14,6 @@ Instalation:
 ### - Make an actual good readme lol
 - See todo file
 - Feel free to contribute with anything you want.
+
+
+- In case you want to contribute and you need more emojis, you can get them from [Icons 8](https://iconos8.es/icons/color-glass)
