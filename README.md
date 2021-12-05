@@ -1,7 +1,9 @@
 # music-bot
 discord.js v13 music bot w/mongoDB
+- it supports apple music, youtube, youtube music and spotify
 
-Instalation:
+
+## Instalation:
 ...
 
 ## Emojis:
