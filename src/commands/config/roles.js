@@ -47,10 +47,9 @@ module.exports = class Roles extends Interaction {
                 ephemeral: true,
             });
 
-        const add = int.options.getSubcommand("add")
-        const remove = int.options.getSubcommand("remove")
-        const list = int.options.getSubcommand("list")
-        if(add) {
+        const cmd = int.options.getSubcommand("add")
+      
+        if(cmd === "add") {
 
             let role = int.options._hoistedOptions[0].role
 
@@ -77,54 +76,50 @@ module.exports = class Roles extends Interaction {
                 ephemeral: true,
             });
         }
-        if(remove) {
-            let role = int.options._hoistedOptions[0].role
+        if (cmd === "remove") {
+          let role = int.options._hoistedOptions[0].role;
 
-            if(role.id === int.guild.id) {
-                return int.reply({
-                    content: "The *everyone* role is not manageable!",
-                    ephemeral: true,
-                });
-            }
-
-            let old = data.djRoles.find((r) => r === role.id);
-
-            if (!old)
-                return int.reply({
-                    content: `The role ${role.name} is not in the list!`,
-                    ephemeral: true,
-                });
-
-            let index = data.djRoles.indexOf(role.id);
-            data.djRoles.splice(index, 1);
-            await data.save();
-
+          if (role.id === int.guild.id) {
             return int.reply({
-                content: `Removed role ${role.name} from the DJ roles list!`,
-                ephemeral: true,
+              content: "The *everyone* role is not manageable!",
+              ephemeral: true,
             });
+          }
+
+          let old = data.djRoles.find((r) => r === role.id);
+
+          if (!old)
+            return int.reply({
+              content: `The role ${role.name} is not in the list!`,
+              ephemeral: true,
+            });
+
+          let index = data.djRoles.indexOf(role.id);
+          data.djRoles.splice(index, 1);
+          await data.save();
+
+          return int.reply({
+            content: `Removed role ${role.name} from the DJ roles list!`,
+            ephemeral: true,
+          });
         }
-        if(list) {
-            let djs = data.djRoles;
+        if (cmd === "list") {
+          let djs = data.djRoles;
 
-            if (!djs.length)
-                return int.reply({
-                    content: "There are no DJ roles set!",
-                    ephemeral: true,
-                });
+          if (!djs.length)
+            return int.reply({
+              content: "There are no DJ roles set!",
+              ephemeral: true,
+            });
 
-            let emb = new MessageEmbed()
-                .setTitle("DJ Roles list")
-                .setThumbnail(int.guild.iconURL({size: 2048, dynamic: true}))
-                .setColor("#2f3136")
-                .setDescription(
-                    `${djs
-                        .map((m) => `<@&${m}>`)
-                        .join(" ")}`
-                )
-                .setTimestamp();
+          let emb = new MessageEmbed()
+            .setTitle("DJ Roles list")
+            .setThumbnail(int.guild.iconURL({ size: 2048, dynamic: true }))
+            .setColor("#2f3136")
+            .setDescription(`${djs.map((m) => `<@&${m}>`).join(" ")}`)
+            .setTimestamp();
 
-            return int.reply({embeds: [emb]});
+          return int.reply({ embeds: [emb] });
         }
     }
 };
