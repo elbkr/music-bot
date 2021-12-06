@@ -1,18 +1,17 @@
-
-
 # MUSIC BOT
 
 ## Features
 - Play songs from YouTube, Spotify, Apple Music and YouTube Music
 - Add playlists
+- Support voice and stage channels
 - Allow the BOT to only play music in specific voice channels
 - Allow DJ roles to manage songs
 - Vote skip and force play
 - Much more!
 
-![splash](readme/splash.png)
+<img src="readme/splash.png" width="550px">
 
-## Instalation:
+## Instalation
 
 ### Requirements
 - Node v16 or higher
@@ -60,7 +59,7 @@ EMOJIS_GUILD_ID=831236275162972180
 1. Open a terminal and run `npm install` or `npm i`
 2. Run `node .`
 
-## Contributing:
+## Contributing
 - Want to contribute? Feel free to make any changes you want
 1. Fork or clone the repo
 2. Make any changes you want (You can also see `todo` file)
