@@ -9,7 +9,7 @@
 - Vote skip and force play
 - Much more!
 
-<img src="readme/splash.png" width="550px">
+<img src="readme/splash.png" width="700px">
 
 ## Instalation
 
