@@ -28,7 +28,7 @@
     "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "bufferutil": "^4.0.5",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "discord-api-types": "^0.25.2",
     "discord-music-player": "^8.3.1",
     "discord.js": "^13.3.1",
