@@ -26,7 +26,7 @@
 2. Create a BOT and Copy the BOT token
 4. Go to OAuth2 and copy the client ID
 5. Paste the token at `TOKEN` line and the client ID  at `CLIENT_ID` line in `.env` file
-6. Replace `REPLACE_THIS` in the following URL with the client ID, and enter the link
+6. Change `REPLACE_THIS` in the following URL with the client ID, and enter the link in your browser
 
 `https://discord.com/api/oauth2/authorize?client_id=REPLACE_THIS&permissions=8&scope=applications.commands%20bot`
 
