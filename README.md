@@ -1,4 +1,8 @@
-# MUSIC BOT
+<p align="center">
+  <a href="https://github.com/elbkr/music-bot">
+    <img src="readme/music-bot.png" alt="music-bot" />
+  </a>
+</p>
 
 ## Features
 - Play songs from YouTube, Spotify, Apple Music and YouTube Music
@@ -9,9 +13,9 @@
 - Vote skip and force play
 - Much more!
 
-<img src="readme/splash.png" width="700px">
+<img src="readme/splash.png" width="3000" alt="splash">
 
-## Instalation
+## Installation
 
 ### Requirements
 - Node v16 or higher
@@ -66,4 +70,4 @@ EMOJIS_GUILD_ID=831236275162972180
 3. Open a pull request explaining what changes you've made
 4. I ([el bkr](https://github.com/elbkr)) will review it and accept it :D
 
-- In case you want to contribute and you need more emojis, you can get them from [Icons 8](https://iconos8.es/icons/color-glass)
+- In case you want to contribute, and you need more emojis, you can get them from [Icons 8](https://iconos8.es/icons/color-glass)
