@@ -37,7 +37,7 @@
     "fs": "^0.0.1-security",
     "glob": "^7.2.0",
     "moment": "^2.29.1",
-    "mongoose": "^6.0.14",
+    "mongoose": "^6.0.15",
     "pretty-ms": "^7.0.1",
     "seconds-formater": "^1.2.0",
     "utf-8-validate": "^5.0.7",
