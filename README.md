@@ -15,6 +15,15 @@
 
 <img src="readme/splash.png" width="3000" alt="splash">
 
+## Contributing
+- Want to contribute? Feel free to make any changes you want
+1. Fork or clone the repo
+2. Make any changes you want (You can also see `todo` file)
+3. Open a pull request explaining what changes you've made
+4. I ([el bkr](https://github.com/elbkr)) will review it and accept it :D
+
+- In case you want to contribute, and you need more emojis, you can get them from [Icons 8](https://iconos8.es/icons/color-glass)
+
 ## Installation
 
 ### Requirements
@@ -63,11 +72,17 @@ EMOJIS_GUILD_ID=831236275162972180
 1. Open a terminal and run `npm install` or `npm i`
 2. Run `node .`
 
-## Contributing
-- Want to contribute? Feel free to make any changes you want
-1. Fork or clone the repo
-2. Make any changes you want (You can also see `todo` file)
-3. Open a pull request explaining what changes you've made
-4. I ([el bkr](https://github.com/elbkr)) will review it and accept it :D
-
-- In case you want to contribute, and you need more emojis, you can get them from [Icons 8](https://iconos8.es/icons/color-glass)
+## Free hosting
+1. Local host
+   After the configuration, run `node .` in the terminal (not recommended)
+   - It turns off when you turn off the PC
+2. Heroku
+   - After the configuration, add the files to a GitHub repository
+   - Login or register in [Heroku](https://id.heroku.com/login)
+   - Create a new app
+   - In `deploy` section, press `Connect to GitHub`
+   - After connecting, search for the repository and press `connect`
+   - Press **Enable automatic deploys** (optional)
+   - Click **Deploy Branch**
+   - Go to `Resources` section
+   - Disable the `web` type and enable `worker` type
