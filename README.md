@@ -5,6 +5,7 @@
 </p>
 
 ## Features
+- Multi guild!
 - Play songs from YouTube, Spotify, Apple Music and YouTube Music
 - Add playlists
 - Support voice and stage channels
