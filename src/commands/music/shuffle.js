@@ -26,7 +26,7 @@ module.exports = class Shuffle extends Interaction {
 
     let isDJ = data.djRoles.some((r) => int.member._roles.includes(r));
     let isAllowed = data.voiceChannels.find((c) => c === channel.id);
-    let members = channel.members.filter((m) => !m.user.bot).size;
+    let members = channel.members.filter((m) => !m.user.bot);
 
     if (data.voiceChannels.length > 0 && !isAllowed) {
       return int.reply({

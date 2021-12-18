@@ -8,7 +8,7 @@ module.exports = class Loop extends Interaction {
       options: [
         {
           type: "3",
-          name: "type",
+          name: "mode",
           description: "Loop mode",
           required: true,
           choices: [
@@ -41,6 +41,7 @@ module.exports = class Loop extends Interaction {
         )} You must be in a voice channel to use this command!`,
         ephemeral: true,
       });
+
     if (int.guild.me.voice.channel && channel !== int.guild.me.voice.channel)
       return int.reply({
         content: `${this.client.emotes.get(
@@ -51,7 +52,7 @@ module.exports = class Loop extends Interaction {
 
     let isDJ = data.djRoles.some((r) => int.member._roles.includes(r));
     let isAllowed = data.voiceChannels.find((c) => c === channel.id);
-    let members = channel.members.filter((m) => !m.user.bot).size;
+    let members = channel.members.filter((m) => !m.user.bot);
 
     if (data.voiceChannels.length > 0 && !isAllowed) {
       return int.reply({
@@ -62,11 +63,7 @@ module.exports = class Loop extends Interaction {
       });
     }
 
-    if (
-      members.size > 1 &&
-      !isDJ &&
-      !int.member.permissions.has("MANAGE_GUILD")
-    ) {
+    if (members.size > 1 && !isDJ && !int.member.permissions.has("MANAGE_GUILD")) {
       return int.reply({
         content:
           "You must be a DJ or be alone in the voice channel to use this command!",

@@ -43,11 +43,10 @@ module.exports = class Skip extends Interaction {
       });
 
     let isDJ = data.djRoles.some((r) => int.member._roles.includes(r));
-    let members = channel.members.filter((m) => !m.user.bot).size;
+    let members = channel.members.filter((m) => !m.user.bot);
 
-    if (members > 1 && !isDJ && !int.member.permissions.has("MANAGE_GUILD")) {
-      let size = channel.members.filter((m) => !m.user.bot).size;
-      let required = Math.ceil(size / 2);
+    if (members.size > 1 && !isDJ && !int.member.permissions.has("MANAGE_GUILD")) {
+      let required = members.size === 2 ? 2 : Math.ceil(members.size / 2);
 
       if (queue.skipVotes.includes(int.user.id)) {
         return int.reply({
@@ -58,7 +57,7 @@ module.exports = class Skip extends Interaction {
 
       queue.skipVotes.push(int.user.id);
       int.reply({
-        content: `You voted to skip the current track! **${queue.skipVotes.length}/${required})**`,
+        content: `You voted to skip the current track! **${queue.skipVotes.length}/${required}**`,
       });
 
       if (queue.skipVotes.length >= required) {

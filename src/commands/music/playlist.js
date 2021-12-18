@@ -36,6 +36,7 @@ module.exports = class Playlist extends Interaction {
 
     let isDJ = data.djRoles.some((r) => int.member._roles.includes(r));
     let isAllowed = data.voiceChannels.find((c) => c === channel.id);
+    let members = channel.members.filter((m) => !m.user.bot);
 
     if (data.voiceChannels.length > 0 && !isAllowed) {
       return int.reply({
@@ -47,7 +48,7 @@ module.exports = class Playlist extends Interaction {
     }
 
     if (
-      channel.members.size > 1 &&
+      members.size > 1 &&
       !isDJ &&
       !int.member.permissions.has("MANAGE_GUILD")
     ) {
