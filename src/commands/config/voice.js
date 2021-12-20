@@ -47,7 +47,7 @@ module.exports = class Voice extends Interaction {
                 ephemeral: true,
             });
 
-        const cmd = int.options.getSubcommand("add")
+        const cmd = int.options.getSubcommand()
       
         if (cmd === "add") {
           let channel = int.options._hoistedOptions[0].channel;

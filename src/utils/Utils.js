@@ -16,7 +16,7 @@ module.exports = class Util {
   }
 
   static formatArray(array, type = "conjunction") {
-    return new Intl.ListFormat("es-ES", { style: "short", type: type }).format(
+    return new Intl.ListFormat("en-GB", { style: "short", type: type }).format(
       array
     );
   }

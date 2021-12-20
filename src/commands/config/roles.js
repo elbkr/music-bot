@@ -47,7 +47,7 @@ module.exports = class Roles extends Interaction {
                 ephemeral: true,
             });
 
-        const cmd = int.options.getSubcommand("add")
+        const cmd = int.options.getSubcommand()
       
         if(cmd === "add") {
 

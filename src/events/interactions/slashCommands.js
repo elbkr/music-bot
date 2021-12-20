@@ -14,7 +14,7 @@ module.exports = class SlashCommands extends Event {
         try {
             await cmd.exec(interaction, data);
         } catch (err) {
-            if (interaction.replied) {
+            if (interaction.replied || interaction.deferred) {
                 if (!interaction.ephemeral) {
                     await interaction.editReply({
                         content:
