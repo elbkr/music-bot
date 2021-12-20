@@ -6,8 +6,8 @@
 
 ## Features
 - Multi guild!
-- Play songs from YouTube, Spotify, Apple Music and YouTube Music
-- Add playlists
+- Play songs or playlists from YouTube, Spotify, Apple Music and YouTube Music
+- Save your favorite songs!
 - Support voice and stage channels
 - Allow the BOT to only play music in specific voice channels
 - Allow DJ roles to manage songs
