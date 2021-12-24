@@ -4,6 +4,13 @@
   </a>
 </p>
 
+ <p align ="center">
+   <a href="https://www.jetbrains.com/community/opensource/#support">
+    <img src="readme/jb_beam.png" alt="jetbrains" width="25"/>
+  </a>  Thanks to <a href="https://www.jetbrains.com/community/opensource/#support">JetBrains</a> for providing me free license for developing this project!
+  </p>
+  
+
 ## Features
 - Multi guild!
 - Play songs or playlists from YouTube, Spotify, Apple Music and YouTube Music
@@ -38,6 +45,7 @@
 ### Creating the application
 1. Create an application in [Discord Developer Portal](https://discord.com/developers/applications)
 2. Create a BOT and Copy the BOT token
+3. Enable all privileged gateway intents
 4. Go to OAuth2 and copy the client ID
 5. Paste the token at `TOKEN` line and the client ID  at `CLIENT_ID` line in `.env` file
 6. Change `REPLACE_THIS` in the following URL with the client ID, and enter the link in your browser
