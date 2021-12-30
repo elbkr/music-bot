@@ -14,7 +14,7 @@ module.exports = class Loop extends Interaction {
           choices: [
             {
               name: "track",
-              value: "queue",
+              value: "track",
             },
             {
               name: "queue",
