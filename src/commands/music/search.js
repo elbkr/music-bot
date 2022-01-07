@@ -18,7 +18,7 @@ module.exports = class Search extends Interaction {
   }
 
   async exec(int, data) {
-    const input = int.options.getString("song");
+    const input = int.options.getString("input");
 
     let channel = int.member.voice.channel;
 
