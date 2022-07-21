@@ -12,7 +12,7 @@ module.exports = class InteractionCreate extends Event {
                 _id: interaction.guild.id,
             });
 
-            if (interaction.isCommand()) return this.client.emit("slashCommands", interaction, data);
+            if (interaction.type === InteractionType.ApplicationCommand) return this.client.emit("slashCommands", interaction, data);
         }
     }
 };

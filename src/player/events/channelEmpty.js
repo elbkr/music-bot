@@ -5,9 +5,10 @@ module.exports = class ChannelEmpty extends Event {
             once: false,
         });
     }
+
     async exec(queue) {
-       if(queue) {
-           queue.skipVotes = [];
-       }
+        if (queue) {
+            queue.skipVotes = [];
+        }
     }
 };

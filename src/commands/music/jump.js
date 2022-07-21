@@ -1,31 +1,21 @@
-const {sourceTest, testPlaylist} = require("../../utils/Utils")
-
-module.exports = class Play extends Interaction {
+module.exports = class Jump extends Interaction {
     constructor() {
         super({
-            name: "play",
-            description: "Adds a song to the queue",
+            name: "jump",
+            description: "Skips to a specific track in the queue",
             options: [
                 {
-                    type: ApplicationCommandOptionType.String,
-                    name: "input",
-                    description: "The search term or a link",
+                    type: ApplicationCommandOptionType.Integer,
+                    name: "song",
+                    description: "The position of the track in the queue",
                     required: true,
-                },
-                {
-                    type: ApplicationCommandOptionType.Boolean,
-                    name: "force",
-                    description: "Directly play the song",
-                    required: false,
                 },
             ],
         });
     }
 
     async exec(int, data) {
-        const song = int.options.getString("input");
-        const force = int.options.getBoolean("force");
-
+        let number = int.options.getInteger("song");
         let channel = int.member.voice.channel;
 
         if (!channel)
@@ -57,45 +47,44 @@ module.exports = class Play extends Interaction {
         }
 
         if (
-            force &&
             members.size > 1 &&
             !isDJ &&
             !int.member.permissions.has("MANAGE_GUILD")
         ) {
             return int.reply({
                 content:
-                    "You must be a DJ or be alone in the voice channel to use the force function!",
+                    "You must be a DJ or be alone in the voice channel to use this command!",
                 ephemeral: true,
             });
         }
 
-        let source = await sourceTest(song);
-        let isPlaylist = testPlaylist(song);
+        let queue = this.client.player.getQueue(int.guild.id);
+        if (!queue)
+            return int.reply({
+                content: "There is no music playing in this guild!",
+                ephemeral: true,
+            });
 
-        if (isPlaylist) {
-            return this.client.play(
-                this.client,
-                int,
-                data,
-                song,
-                source,
-                true,
-                false,
-                false,
-                false
-            );
-        } else {
-            return this.client.play(
-                this.client,
-                int,
-                data,
-                song,
-                source,
-                false,
-                false,
-                false,
-                force
-            );
-        }
+        if (number > queue.songs.length || number < 0)
+            return int.reply({
+                content: "The number you provided is out of range!",
+                ephemeral: true,
+            });
+
+        let song;
+        queue.songs.forEach((s, i) => {
+            if (i === number) {
+                song = s;
+            }
+        });
+
+        await queue.skip(number - 1);
+
+        return int.reply({
+            content: `${this.client.emotes.get("skip")} Skipped to **${number}. ${
+                song.name
+            }**!`,
+            ephemeral: true,
+        });
     }
 };

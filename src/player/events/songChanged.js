@@ -25,7 +25,7 @@ module.exports = class SongChanged extends Event {
                         }
                     }
 
-                    if(data.announcements) {
+                    if (data.announcements) {
                         channel
                             .send(
                                 `${client.emotes.get("play")} Started playing **${newSong.name}**`
@@ -36,7 +36,7 @@ module.exports = class SongChanged extends Event {
                     }
 
                 } else {
-                    if(data.announcements) {
+                    if (data.announcements) {
                         channel
                             .send(
                                 `${client.emotes.get("play")} Started playing **${newSong.name}**`

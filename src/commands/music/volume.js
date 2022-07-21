@@ -5,7 +5,7 @@ module.exports = class Volume extends Interaction {
       description: "Changes the volume of the music player",
       options: [
         {
-          type: "4",
+          type: ApplicationCommandOptionType.Integer,
           name: "value",
           description: "The value to set the volume to",
           required: true,
@@ -25,7 +25,7 @@ module.exports = class Volume extends Interaction {
         )} You must be in a voice channel to use this command!`,
         ephemeral: true,
       });
-    if (int.guild.me.voice.channel && channel !== int.guild.me.voice.channel)
+    if (int.guild.members.me.voice.channel && channel !== int.guild.members.me.voice.channel)
       return int.reply({
         content: `${this.client.emotes.get(
           "nomic"

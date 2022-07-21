@@ -43,12 +43,9 @@ module.exports = class SongAdd extends Event {
 
 
             let emb;
-            if(queue.songs.indexOf(song) === 1 && queue.songs.length > 2) {
-                emb = new MessageEmbed()
-                    .setAuthor(
-                        ` ${user.username} `,
-                        user.displayAvatarURL({dynamic: true})
-                    )
+            if (queue.songs.indexOf(song) === 1 && queue.songs.length > 2) {
+                emb = new EmbedBuilder()
+                    .setAuthor({name: ` ${user.username} `, iconURL: user.displayAvatarURL()})
                     .setTitle(`${song.name}`)
                     .setURL(`${song.url}`)
                     .setColor("#2f3136")
@@ -71,11 +68,8 @@ module.exports = class SongAdd extends Event {
                         },
                     )
             } else {
-                emb = new MessageEmbed()
-                    .setAuthor(
-                        ` ${user.username} `,
-                        user.displayAvatarURL({dynamic: true})
-                    )
+                emb = new EmbedBuilder()
+                    .setAuthor({name: ` ${user.username} `, iconURL: user.displayAvatarURL()})
                     .setTitle(`${song.name}`)
                     .setURL(`${song.url}`)
                     .setColor("#2f3136")
@@ -99,7 +93,12 @@ module.exports = class SongAdd extends Event {
                     )
 
                 if ((queue.songs.length - 1) !== 0) {
-                    emb.addField("Position in queue", `${queue.songs.length - 1}`, false)
+                    emb.addFields(
+                        {
+                            name: "Position in queue",
+                            value: `${queue.songs.length - 1}`,
+                            inline: false
+                        })
                 }
             }
 

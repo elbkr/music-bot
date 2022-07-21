@@ -7,7 +7,7 @@ module.exports = class Ready extends Event {
     }
 
     async exec() {
-        this.client.user.setActivity("/play", { type: "WATCHING" });
+        this.client.user.setActivity("/play", {type: ActivityType.Watching});
 
         let allMembers = new Set();
         this.client.guilds.cache.forEach((guild) => {
@@ -36,7 +36,11 @@ module.exports = class Ready extends Event {
         if (guild) {
             await this.client.loadEmotes(guild).then(() => {
                 this.client.logger.log("Loaded emotes!", {tag: "Emotes"});
-            });
+            }).catch((err) => {
+                this.client.logger.error(`Couldn't load emotes\n${err.stack ? err + "\n\n" + err.stack : err}`, {
+                    tag: "Emotes",
+                })
+            })
         }
 
         for (const guild of this.client.guilds.cache.values()) {

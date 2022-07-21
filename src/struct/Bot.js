@@ -1,6 +1,6 @@
-const {Client, Collection, Intents} = require("discord.js");
+const {Client, Collection, GatewayIntentBits, Partials} = require("discord.js");
 const {connect, connection: db} = require("mongoose");
-const {Routes} = require("discord-api-types/v9");
+const {Routes} = require("discord-api-types/v10");
 const {REST} = require("@discordjs/rest");
 const {resolve} = require("path");
 const {sync} = require("glob");
@@ -11,11 +11,10 @@ require("./Event");
 module.exports = class Bot extends Client {
     constructor() {
         super({
-            intents: Object.values(Intents.FLAGS),
-            partials: ["MESSAGE", "REACTION"],
+            intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildBans, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks, GatewayIntentBits.GuildInvites, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildScheduledEvents],
+            partials: [Partials.Message, Partials.Reaction],
             allowedMentions: {
-                parse: ["roles", "users"],
-                repliedUser: false,
+                parse: ["roles", "users"], repliedUser: false,
             },
         });
 
@@ -29,44 +28,19 @@ module.exports = class Bot extends Client {
         this.database.guilds = new Collection();
 
 
-        db.on("connected", async () =>
-            this.logger.log(
-                `Successfully connected to the database! (Latency: ${Math.round(await this.databasePing())}ms)`,
-                {tag: "Database"}
-            )
-        );
-        db.on("disconnected", () =>
-            this.logger.error("Disconnected from the database!", {tag: "Database"})
-        );
-        db.on("error", (error) =>
-            this.logger.error(
-                `Unable to connect to the database!\n${
-                    error.stack ? error + "\n\n" + error.stack : error
-                }`,
-                {
-                    tag: "Database",
-                }
-            )
-        );
-        db.on("reconnected", async () =>
-            this.logger.log(
-                `Reconnected to the database! (Latency: ${Math.round(
-                    await this.databasePing()
-                )}ms)`,
-                {tag: "Database"}
-            )
-        );
+        db.on("connected", async () => this.logger.log(`Successfully connected to the database! (Latency: ${Math.round(await this.databasePing())}ms)`, {tag: "Database"}));
+        db.on("disconnected", () => this.logger.error("Disconnected from the database!", {tag: "Database"}));
+        db.on("error", (error) => this.logger.error(`Unable to connect to the database!\n${error.stack ? error + "\n\n" + error.stack : error}`, {
+            tag: "Database",
+        }));
+        db.on("reconnected", async () => this.logger.log(`Reconnected to the database! (Latency: ${Math.round(await this.databasePing())}ms)`, {tag: "Database"}));
     }
 
     async getGuild({_id: guildId}, check = false) {
         if (this.database.guilds.get(guildId)) {
-            return check
-                ? this.database.guilds.get(guildId).toJSON()
-                : this.database.guilds.get(guildId);
+            return check ? this.database.guilds.get(guildId).toJSON() : this.database.guilds.get(guildId);
         } else {
-            let guildData = check
-                ? await this.guildsData.findOne({guildID: guildId}).lean()
-                : await this.guildsData.findOne({guildID: guildId});
+            let guildData = check ? await this.guildsData.findOne({guildID: guildId}).lean() : await this.guildsData.findOne({guildID: guildId});
             if (guildData) {
                 if (!check) this.database.guilds.set(guildId, guildData);
                 return guildData;
@@ -82,8 +56,7 @@ module.exports = class Bot extends Client {
     /* Start database */
     async loadDatabase() {
         return connect(process.env.MONGO, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useNewUrlParser: true, useUnifiedTopology: true,
         });
     }
 
@@ -103,15 +76,15 @@ module.exports = class Bot extends Client {
                 emojis.forEach(e => {
                     if (e.name.includes("_")) {
                         let name = e.name.replace("_", "-")
-                        if(e.animated){
+                        if (e.animated) {
                             this.emotes.set(name, `<${e.identifier}>`);
-                        } else{
+                        } else {
                             this.emotes.set(name, `<:${e.identifier}>`);
                         }
                     } else {
-                        if(e.animated){
+                        if (e.animated) {
                             this.emotes.set(e.name, `<${e.identifier}>`);
-                        } else{
+                        } else {
                             this.emotes.set(e.name, `<:${e.identifier}>`);
                         }
                     }
@@ -133,23 +106,29 @@ module.exports = class Bot extends Client {
     /* Load slash commands for each guild */
     async loadInteractions(guildId) {
         const intFile = await sync(resolve("./src/commands/**/*.js"));
-        intFile.forEach((filepath) => {
+        let data = []
+        for (const filepath of intFile) {
             const File = require(filepath);
-            if (!(File.prototype instanceof Interaction)) return;
+            if (!(File.prototype instanceof Interaction)) continue;
             const interaction = new File();
             interaction.client = this;
             this.interactions.set(interaction.name, interaction);
-            const rest = new REST({version: "9"}).setToken(process.env.TOKEN);
 
-            rest.post(
-                Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
-                {
-                    body: interaction,
-                }
-            ).catch((err)=> {
-                console.log(err);
-            })
-        });
+            data.push({
+                name: interaction.name,
+                description: interaction.description,
+                type: interaction.type,
+                options: interaction.options
+            });
+        }
+
+        const rest = new REST({version: "10"}).setToken(process.env.TOKEN);
+
+        rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId), {
+            body: data,
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
     /* Load events */
@@ -161,14 +140,8 @@ module.exports = class Bot extends Client {
             const event = new File();
             event.client = this;
             this.events.set(event.name, event);
-            const emitter = event.emitter
-                ? typeof event.emitter === "string"
-                    ? this[event.emitter]
-                    : emitter
-                : this;
-            emitter[event.type ? "once" : "on"](event.name, (...args) =>
-                event.exec(...args)
-            );
+            const emitter = event.emitter ? typeof event.emitter === "string" ? this[event.emitter] : emitter : this;
+            emitter[event.type ? "once" : "on"](event.name, (...args) => event.exec(...args));
         });
     }
 

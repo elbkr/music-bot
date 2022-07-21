@@ -1,6 +1,5 @@
 const {msToSeconds} = require("../../utils/Utils");
 const sf = require("seconds-formater");
-const {MessageEmbed} = require("discord.js");
 
 module.exports = class PlaylistAdd extends Event {
     constructor() {
@@ -54,8 +53,8 @@ module.exports = class PlaylistAdd extends Event {
                 playlist.duration = sf.convert(seconds).format("M:SS");
             }
 
-            let emb = new MessageEmbed()
-                .setAuthor(` ${user.username} `, user.displayAvatarURL({dynamic: true}))
+            let emb = new EmbedBuilder()
+                .setAuthor({name: ` ${user.username} `, iconURL: user.displayAvatarURL()})
                 .setTitle(`${playlist.name}`)
                 .setURL(`${playlist.url}`)
                 .setThumbnail(`${playlist.songs[0].thumbnail}`)
@@ -71,7 +70,11 @@ module.exports = class PlaylistAdd extends Event {
                         value: playlist.duration,
                         inline: true,
                     },
-                    {name: "Estimated time", value: `${timeLeft}`, inline: false},
+                    {
+                        name: "Estimated time",
+                        value: `${timeLeft}`,
+                        inline: false
+                    },
                     {
                         name: "Songs",
                         value: `${playlist.songs.length}`,

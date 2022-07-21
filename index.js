@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./src/utils/Types")();
 
 /* Import our client structure */
 const Bot = require("./src/struct/Bot");

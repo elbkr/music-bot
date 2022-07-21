@@ -23,6 +23,8 @@ module.exports = async function play(
     let channel = int.member.voice.channel;
 
     await queue.join(channel).catch((err) => {
+        client.logger.error(`Couldn't join the voice channel\n${err.stack ? err + "\n\n" + err.stack : err}`, {tag: "Player"})
+
         if (search) {
             return int.editReply({
                 content: `${client.emotes.get("nomic")} I couldn't join the voice channel.`,
@@ -56,7 +58,7 @@ module.exports = async function play(
                 }
             });
 
-        if (!pl) return int.channel.send("No playlist found!");
+        if (!pl) return int.channel.send(`${client.emotes.get("notfound")} No playlist found!`);
     } else {
         if (force) {
             let song = await queue
@@ -69,7 +71,7 @@ module.exports = async function play(
                         queue.stop();
                     }
                 });
-            if (!song) return int.channel.send("No track found!");
+            if (!song) return int.channel.send(`${client.emotes.get("notfound")} No track found!`);
             queue.skip()
         } else {
             let song = await queue.play(input, {requestedBy: int.user}).catch((_, err) => {
@@ -80,7 +82,7 @@ module.exports = async function play(
                     queue.stop();
                 }
             });
-            if (!song) return int.channel.send("No track found!");
+            if (!song) return int.channel.send(`${client.emotes.get("notfound")} No track found!`);
         }
 
     }

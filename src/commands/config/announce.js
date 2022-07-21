@@ -5,7 +5,7 @@ module.exports = class Announce extends Interaction {
             description: "Toggles whether to send the started playing message",
             options: [
                 {
-                    type: "5",
+                    type: ApplicationCommandOptionType.Boolean,
                     name: "mode",
                     description: "Whether to send the started playing message",
                     required: true
@@ -13,6 +13,7 @@ module.exports = class Announce extends Interaction {
             ],
         });
     }
+
     async exec(int, data) {
         if (!int.member.permissions.has("MANAGE_GUILD"))
             return int.reply({
@@ -20,39 +21,39 @@ module.exports = class Announce extends Interaction {
                 ephemeral: true,
             });
 
-       const mode = int.options.getBoolean("mode");
+        const mode = int.options.getBoolean("mode");
 
-      if(mode === true) {
-          if(data.announcements) {
-              return int.reply({
-                  content: "The announcements are already enabled!",
-                  ephemeral: true,
-              });
-          }
+        if (mode === true) {
+            if (data.announcements) {
+                return int.reply({
+                    content: "The announcements are already enabled!",
+                    ephemeral: true,
+                });
+            }
 
-          data.announcements = true;
-          await data.save();
+            data.announcements = true;
+            await data.save();
 
-          int.reply({
-              content: "Announcements are now enabled!",
-              ephemeral: true,
-          });
-      } else {
+            int.reply({
+                content: "Announcements are now enabled!",
+                ephemeral: true,
+            });
+        } else {
 
-          if(!data.announcements) {
-              return int.reply({
-                  content: "The announcements are already disabled!",
-                  ephemeral: true,
-              });
-          }
+            if (!data.announcements) {
+                return int.reply({
+                    content: "The announcements are already disabled!",
+                    ephemeral: true,
+                });
+            }
 
-          data.announcements = false;
-          await data.save();
+            data.announcements = false;
+            await data.save();
 
-          int.reply({
-              content: "Announcements are now disabled!",
-              ephemeral: true,
-          });
-      }
+            int.reply({
+                content: "Announcements are now disabled!",
+                ephemeral: true,
+            });
+        }
     }
 };

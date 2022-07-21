@@ -1,4 +1,3 @@
-const {MessageEmbed, MessageButton} = require('discord.js');
 const paginationEmbed = require("../../utils/Pagination");
 const users = require("../../models/Users")
 
@@ -9,17 +8,17 @@ module.exports = class Fav extends Interaction {
             description: "Manage your favorite songs",
             options: [
                 {
-                    type: "1",
+                    type: ApplicationCommandOptionType.Subcommand,
                     name: "add",
                     description: "Add the current playing song to your favorites",
                 },
                 {
-                    type: "1",
+                    type: ApplicationCommandOptionType.Subcommand,
                     name: "remove",
                     description: "Remove a song from your favorites",
                     options: [
                         {
-                            type: "3",
+                            type: ApplicationCommandOptionType.Integer,
                             name: "song",
                             description: "The number of the song",
                             required: true,
@@ -27,7 +26,7 @@ module.exports = class Fav extends Interaction {
                     ]
                 },
                 {
-                    type: "1",
+                    type: ApplicationCommandOptionType.Subcommand,
                     name: "list",
                     description: "List your favorite songs",
                 },
@@ -37,7 +36,7 @@ module.exports = class Fav extends Interaction {
                     description: "Play one of your favorite songs",
                     options: [
                         {
-                            type: "4",
+                            type: ApplicationCommandOptionType.Integer,
                             name: "song",
                             description: "The number of the song",
                             required: true,
@@ -47,6 +46,7 @@ module.exports = class Fav extends Interaction {
             ],
         });
     }
+
     async exec(int, data) {
         await int.deferReply()
         const cmd = int.options.getSubcommand()
@@ -55,14 +55,14 @@ module.exports = class Fav extends Interaction {
             _id: int.user.id,
         });
 
-        if(!user) {
+        if (!user) {
             user = new users({
                 _id: int.user.id,
                 savedSongs: [],
             });
         }
 
-        if(cmd === "add") {
+        if (cmd === "add") {
             let hasQueue = this.client.player.hasQueue(int.guild.id);
             if (!hasQueue) {
                 return int.editReply({
@@ -128,15 +128,15 @@ module.exports = class Fav extends Interaction {
                 });
 
 
-            let btn1 = new MessageButton()
+            let btn1 = new ButtonBuilder()
                 .setCustomId("previousbtn")
                 .setLabel("Previous")
-                .setStyle("SECONDARY");
+                .setStyle(ButtonStyle.Secondary);
 
-            const btn2 = new MessageButton()
+            const btn2 = new ButtonBuilder()
                 .setCustomId("nextbtn")
                 .setLabel("Next")
-                .setStyle("PRIMARY");
+                .setStyle(ButtonStyle.Primary);
 
             let currentEmbedItems = [];
             let embedItemArray = [];
@@ -147,20 +147,20 @@ module.exports = class Fav extends Interaction {
             if (sng.length > 10) {
                 sng.forEach((s, i) => {
                     s.index = i + 1;
-                        if (currentEmbedItems.length < 10) currentEmbedItems.push(s);
-                        else {
-                            embedItemArray.push(currentEmbedItems);
-                            currentEmbedItems = [s];
-                        }
+                    if (currentEmbedItems.length < 10) currentEmbedItems.push(s);
+                    else {
+                        embedItemArray.push(currentEmbedItems);
+                        currentEmbedItems = [s];
+                    }
                 });
 
                 embedItemArray.push(currentEmbedItems);
 
                 embedItemArray.forEach((x) => {
 
-                    let emb = new MessageEmbed()
+                    let emb = new EmbedBuilder()
                         .setTitle(`${this.client.emotes.get("fav")} Favorite Songs`)
-                        .setThumbnail(int.user.displayAvatarURL({ size: 2048, dynamic: true }))
+                        .setThumbnail(int.user.displayAvatarURL({size: 2048, dynamic: true}))
                         .setColor("#2f3136")
                         .setDescription(`${x.map((s) => `[${s.index}. ${s.name}](${s.url})`).join("\n")}`)
                         .setTimestamp();
@@ -171,35 +171,35 @@ module.exports = class Fav extends Interaction {
                 await paginationEmbed(int, pages, buttonList);
             } else {
 
-                let emb = new MessageEmbed()
+                let emb = new EmbedBuilder()
                     .setTitle(`${this.client.emotes.get("fav")} Favorite Songs`)
-                    .setThumbnail(int.user.displayAvatarURL({ size: 2048, dynamic: true }))
+                    .setThumbnail(int.user.displayAvatarURL({size: 2048}))
                     .setColor("#2f3136")
-                    .setDescription(`${sng.map((s, i) => `[${i +1}. ${s.name}](${s.url})`).join("\n")}`)
+                    .setDescription(`${sng.map((s, i) => `[${i + 1}. ${s.name}](${s.url})`).join("\n")}`)
                     .setTimestamp();
 
-                return int.editReply({ embeds: [emb] });
+                return int.editReply({embeds: [emb]});
             }
         }
 
-        if(cmd === "play") {
+        if (cmd === "play") {
 
             let index = int.options._hoistedOptions[0].value;
 
 
-                let sng = user.savedSongs.find((s, i)  => i + 1 === Number(index));
-                if(!sng)
-                    return int.editReply({
-                        content: "This song is not in your favorites!",
-                        ephemeral: true,
-                    });
-
-                await int.editReply({
-                    content: `${this.client.emotes.get("fav")} Playing **${sng.name}**!`,
+            let sng = user.savedSongs.find((s, i) => i + 1 === Number(index));
+            if (!sng)
+                return int.editReply({
+                    content: "This song is not in your favorites!",
                     ephemeral: true,
                 });
 
-                return this.client.play(this.client, int, data, sng.url, "youtube", false, true, false, false);
+            await int.editReply({
+                content: `${this.client.emotes.get("fav")} Playing **${sng.name}**!`,
+                ephemeral: true,
+            });
+
+            return this.client.play(this.client, int, data, sng.url, "youtube", false, true, false, false);
 
         }
     }
