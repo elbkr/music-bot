@@ -7,7 +7,7 @@ module.exports = model(
             _id: String,
             djRoles: {type: Array, default: null},
             voiceChannels: {type: Array, default: null},
-            announcements: {type: Boolean, default: null},
+            announcements: {type: Boolean, default: true},
         },
         {versionKey: false}
     )
