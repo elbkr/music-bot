@@ -31,7 +31,7 @@ module.exports = class Fav extends Interaction {
                     description: "List your favorite songs",
                 },
                 {
-                    type: "1",
+                    type: ApplicationCommandOptionType.Subcommand,
                     name: "play",
                     description: "Play one of your favorite songs",
                     options: [
