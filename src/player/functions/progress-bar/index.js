@@ -21,7 +21,4 @@ const progressBar = (total, current, size = 40, empty = '▬', line = '▬', sli
     }
 };
 
-
-module.exports = {
-    progressBar
-};
+export default progressBar;

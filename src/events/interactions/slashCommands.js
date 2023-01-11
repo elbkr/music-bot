@@ -1,4 +1,4 @@
-module.exports = class SlashCommands extends Event {
+export default class SlashCommands extends Event {
     constructor() {
         super({
             name: "slashCommands",

@@ -1,5 +1,4 @@
-const {Permissions} = require("discord.js");
-global.Interaction = module.exports = class Interaction {
+global.Interaction = class Interaction {
     constructor(options) {
         this.name = options.name || name;
         this.type = options.type || 1;
@@ -14,3 +13,5 @@ global.Interaction = module.exports = class Interaction {
         throw new Error(`${this.name} does not provide exec method !`);
     }
 };
+
+export default Interaction;

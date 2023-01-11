@@ -1,6 +1,6 @@
-const paginationEmbed = require("../../utils/Pagination");
+import paginationEmbed from "../../utils/Pagination.js";
 
-module.exports = class Queue extends Interaction {
+export default class Queue extends Interaction {
     constructor() {
         super({
             name: "queue",

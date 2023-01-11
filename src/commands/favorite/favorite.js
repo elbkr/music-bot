@@ -1,7 +1,7 @@
-const paginationEmbed = require("../../utils/Pagination");
-const users = require("../../models/Users")
+import paginationEmbed from "../../utils/Pagination.js";
+import users from "../../models/Users.js";
 
-module.exports = class Fav extends Interaction {
+export default class Fav extends Interaction {
     constructor() {
         super({
             name: "fav",

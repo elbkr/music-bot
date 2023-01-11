@@ -1,8 +1,8 @@
-const sf = require("seconds-formater");
-const {progressBar} = require("../../player/functions/progress-bar");
-const {msToSeconds} = require("../../utils/Utils");
+import sf from "seconds-formater";
+import progressBar from "../../player/functions/progress-bar/index.js";
+import msToSeconds from "../../utils/Utils.js";
 
-module.exports = class NowPlaying extends Interaction {
+export default class NowPlaying extends Interaction {
     constructor() {
         super({
             name: "nowplaying",

@@ -1,4 +1,4 @@
-module.exports = class Replay extends Interaction {
+export default class Replay extends Interaction {
     constructor() {
         super({
             name: "replay",

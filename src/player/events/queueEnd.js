@@ -1,4 +1,4 @@
-module.exports = class QueueEnd extends Event {
+export default class QueueEnd extends Event {
     constructor() {
         super({
             name: "queueEnd",

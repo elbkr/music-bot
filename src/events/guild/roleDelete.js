@@ -1,4 +1,4 @@
-module.exports = class RoleDelete extends Event {
+export default class RoleDelete extends Event {
     constructor() {
         super({
             name: "roleDelete",

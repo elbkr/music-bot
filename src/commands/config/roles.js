@@ -1,4 +1,4 @@
-module.exports = class Roles extends Interaction {
+export default class Roles extends Interaction {
     constructor() {
         super({
             name: "roles",

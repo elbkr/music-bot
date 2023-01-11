@@ -1,9 +1,11 @@
-const {Player} = require("discord-music-player");
-const play = require("./functions/play");
-const {sync} = require("glob");
-const {resolve} = require("path");
+import { Player } from "discord-music-player";
+import play from "./functions/play.js";
+import pkg from "glob"
+const { sync } = pkg
+import { resolve } from "path";
+import { pathToFileURL } from "url";
 
-async function player(client) {
+export default async function player(client) {
     client.player = new Player(client, {
         leaveOnEmpty: false,
         deafenOnJoin: true,
@@ -15,8 +17,9 @@ async function player(client) {
     client.play = play;
 
     const evtFile = await sync(resolve("./src/player/events/*.js"));
-    evtFile.forEach((filepath) => {
-        const File = require(filepath);
+    evtFile.forEach(async (filepath) => {
+        filepath = pathToFileURL(filepath)
+        const File = await import(filepath);
         if (!(File.prototype instanceof Event)) return;
         const event = new File();
 
@@ -32,5 +35,3 @@ async function player(client) {
         );
     });
 }
-
-module.exports = player;

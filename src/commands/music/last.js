@@ -1,4 +1,4 @@
-module.exports = class Last extends Interaction {
+export default class Last extends Interaction {
     constructor() {
         super({
             name: "last",

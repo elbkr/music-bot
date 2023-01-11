@@ -1,14 +1,23 @@
-const {Client, Collection, GatewayIntentBits, Partials} = require("discord.js");
-const {connect, connection: db} = require("mongoose");
-const {Routes} = require("discord-api-types/v10");
-const {REST} = require("@discordjs/rest");
-const {resolve} = require("path");
-const {sync} = require("glob");
+import {Client, Collection, GatewayIntentBits, Partials, Routes, REST} from "discord.js";
+import pkgm from "mongoose";
+const { connect, connection } = pkgm
 
-require("./Interaction");
-require("./Event");
+const db = connection
 
-module.exports = class Bot extends Client {
+import { resolve } from "path";
+import pkg from "glob";
+const { sync } = pkg;
+
+import { pathToFileURL } from "node:url"; 
+
+import("./Interaction.js");
+import("./Event.js");
+import Logger from "../utils/Logger.js";
+import guildsData from "../models/Guilds.js"
+import player from "../player/index.js";
+import { client } from '../../index.js'
+
+export default class Bot extends Client {
     constructor() {
         super({
             intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildBans, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildWebhooks, GatewayIntentBits.GuildInvites, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildScheduledEvents],
@@ -20,13 +29,12 @@ module.exports = class Bot extends Client {
 
         this.events = new Collection();
         this.emotes = new Collection();
-        this.logger = require("../utils/Logger");
+        this.logger = Logger
         this.interactions = new Collection();
 
         this.database = {};
-        this.guildsData = require("../models/Guilds");
+        this.guildsData = guildsData;
         this.database.guilds = new Collection();
-
 
         db.on("connected", async () => this.logger.log(`Successfully connected to the database! (Latency: ${Math.round(await this.databasePing())}ms)`, {tag: "Database"}));
         db.on("disconnected", () => this.logger.error("Disconnected from the database!", {tag: "Database"}));
@@ -56,7 +64,7 @@ module.exports = class Bot extends Client {
     /* Start database */
     async loadDatabase() {
         return connect(process.env.MONGO, {
-            useNewUrlParser: true, useUnifiedTopology: true,
+            useNewUrlParser: true, useUnifiedTopology: true
         });
     }
 
@@ -97,8 +105,6 @@ module.exports = class Bot extends Client {
 
     /* Start player */
     async loadPlayer() {
-        const player = require("../player/index.js");
-
         return player(this);
     }
 
@@ -107,8 +113,11 @@ module.exports = class Bot extends Client {
     async loadInteractions(guildId) {
         const intFile = await sync(resolve("./src/commands/**/*.js"));
         let data = []
-        for (const filepath of intFile) {
-            const File = require(filepath);
+        for (let filepath of intFile) {
+            filepath = pathToFileURL(filepath)
+            let File = await import(filepath);
+            File = File.default
+
             if (!(File.prototype instanceof Interaction)) continue;
             const interaction = new File();
             interaction.client = this;
@@ -134,8 +143,11 @@ module.exports = class Bot extends Client {
     /* Load events */
     async loadEvents() {
         const evtFile = await sync(resolve("./src/events/**/*.js"));
-        evtFile.forEach((filepath) => {
-            const File = require(filepath);
+            evtFile.forEach(async (filepath) => {
+            filepath = pathToFileURL(filepath)
+            let File = await import(filepath);
+            File = File.default
+
             if (!(File.prototype instanceof Event)) return;
             const event = new File();
             event.client = this;
@@ -150,6 +162,6 @@ module.exports = class Bot extends Client {
         await this.loadEvents();
         await this.loadDatabase();
         await this.loadPlayer()
-        return super.login(token);
+        return client.login(token);
     }
 };

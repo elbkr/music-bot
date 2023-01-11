@@ -1,4 +1,4 @@
-module.exports = class InteractionCreate extends Event {
+export default class InteractionCreate extends Event {
     constructor() {
         super({
             name: "interactionCreate",

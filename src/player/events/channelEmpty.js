@@ -1,4 +1,4 @@
-module.exports = class ChannelEmpty extends Event {
+export default class ChannelEmpty extends Event {
     constructor() {
         super({
             name: "channelEmpty",

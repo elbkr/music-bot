@@ -1,6 +1,6 @@
-const {RepeatMode} = require("discord-music-player");
+import { RepeatMode } from "discord-music-player";
 
-module.exports = class Loop extends Interaction {
+export default class Loop extends Interaction {
     constructor() {
         super({
             name: "loop",

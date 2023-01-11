@@ -1,4 +1,4 @@
-module.exports = class SongFirst extends Event {
+export default class SongFirst extends Event {
     constructor() {
         super({
             name: "songFirst",
