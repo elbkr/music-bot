@@ -1,6 +1,6 @@
-const DMP = require("discord-music-player");
+import DMP from "discord-music-player";
 
-module.exports = class Search extends Interaction {
+export default class Search extends Interaction {
     constructor() {
         super({
             name: "search",

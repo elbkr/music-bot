@@ -1,4 +1,4 @@
-module.exports = class Volume extends Interaction {
+export default class Volume extends Interaction {
   constructor() {
     super({
       name: "volume",

@@ -1,4 +1,4 @@
-global.Event = module.exports = class Event {
+global.Event = class Event {
 
     constructor(options) {
         this.name = options.name || "";
@@ -9,3 +9,5 @@ global.Event = module.exports = class Event {
         throw new Error(`${this.name} does not provide exec method !`);
     }
 };
+
+export default Event;

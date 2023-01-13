@@ -1,4 +1,4 @@
-module.exports = class Announce extends Interaction {
+export default class Announce extends Interaction {
     constructor() {
         super({
             name: "announce",

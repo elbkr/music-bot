@@ -1,4 +1,4 @@
-module.exports = class Skip extends Interaction {
+export default class Skip extends Interaction {
     constructor() {
         super({
             name: "skip",

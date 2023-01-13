@@ -1,4 +1,4 @@
-const {ActionRow, EmbedBuilder, ButtonBuilder, ButtonStyle} = require("discord.js");
+import {ActionRow, EmbedBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
 
 /**
  * Creates a pagination embed
@@ -80,4 +80,4 @@ const paginationEmbed = async (
 
     return curPage;
 };
-module.exports = paginationEmbed;
+export default paginationEmbed;

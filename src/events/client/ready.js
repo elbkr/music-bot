@@ -1,4 +1,4 @@
-module.exports = class Ready extends Event {
+export default class Ready extends Event {
     constructor() {
         super({
             name: "ready",
@@ -17,11 +17,6 @@ module.exports = class Ready extends Event {
         });
 
         let allChannels = new Set();
-        this.client.guilds.cache.forEach((guild) => {
-            guild.channels.cache.forEach((channel) => {
-                allChannels.add(channel.id);
-            });
-        });
         this.client.logger.log(`Connected into ${this.client.user.tag}`, {
             tag: "Ready",
         });

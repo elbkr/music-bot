@@ -1,4 +1,4 @@
-module.exports = class Pause extends Interaction {
+export default class Pause extends Interaction {
     constructor() {
         super({
             name: "pause",

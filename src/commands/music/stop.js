@@ -1,4 +1,4 @@
-module.exports = class Stop extends Interaction {
+export default class Stop extends Interaction {
     constructor() {
         super({
             name: "stop",

@@ -1,6 +1,6 @@
-const {sourceTest, testPlaylist} = require("../../utils/Utils");
+import Util from "../../utils/Utils.js";
 
-module.exports = class Playlist extends Interaction {
+export default class Playlist extends Interaction {
     constructor() {
         super({
             name: "playlist",
@@ -62,8 +62,8 @@ module.exports = class Playlist extends Interaction {
         }
 
 
-        let source = await sourceTest(playlist);
-        let isPlaylist = testPlaylist(playlist);
+        let source = await Util.sourceTest(playlist);
+        let isPlaylist = Util.testPlaylist(playlist);
 
         if (!isPlaylist)
             return int.reply({

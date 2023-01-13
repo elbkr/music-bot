@@ -1,4 +1,4 @@
-module.exports = class Jump extends Interaction {
+export default class Jump extends Interaction {
     constructor() {
         super({
             name: "jump",

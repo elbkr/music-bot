@@ -1,4 +1,4 @@
-module.exports = class Shuffle extends Interaction {
+export default class Shuffle extends Interaction {
     constructor() {
         super({
             name: "shuffle",

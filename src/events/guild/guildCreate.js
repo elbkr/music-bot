@@ -1,4 +1,4 @@
-module.exports = class GuildCreate extends Event {
+export default class GuildCreate extends Event {
     constructor() {
         super({
             name: "guildCreate",

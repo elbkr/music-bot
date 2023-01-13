@@ -1,4 +1,4 @@
-module.exports = class Util {
+export default class Util {
     constructor(client) {
         this.client = client;
     }

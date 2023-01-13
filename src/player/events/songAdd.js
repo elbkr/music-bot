@@ -1,8 +1,9 @@
-const {msToSeconds} = require("../../utils/Utils");
-const sf = require("seconds-formater");
-const {MessageEmbed} = require("discord.js");
+import Util from "../../utils/Utils.js";
+const { msToSeconds } = Util
+import sf from "seconds-formater";
+import { EmbedBuilder } from "discord.js";
 
-module.exports = class SongAdd extends Event {
+export default class SongAdd extends Event {
     constructor() {
         super({
             name: "songAdd",

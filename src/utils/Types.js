@@ -1,4 +1,4 @@
-const {
+import {
     InteractionType,
     ApplicationCommandType,
     ApplicationCommandOptionType,
@@ -7,7 +7,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
     ActivityType,
-} = require("discord.js")
+} from "discord.js"
 
 const Types = () => {
     global.InteractionType = InteractionType;
@@ -20,4 +20,4 @@ const Types = () => {
     global.ActivityType = ActivityType;
 }
 
-module.exports = Types;
+export default Types;

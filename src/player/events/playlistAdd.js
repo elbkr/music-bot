@@ -1,7 +1,8 @@
-const {msToSeconds} = require("../../utils/Utils");
-const sf = require("seconds-formater");
+import Util from "../../utils/Utils.js";
+const { msToSeconds } = Util
+import sf from "seconds-formater";
 
-module.exports = class PlaylistAdd extends Event {
+export default class PlaylistAdd extends Event {
     constructor() {
         super({
             name: "playlistAdd",

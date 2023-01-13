@@ -1,4 +1,4 @@
-module.exports = async function play(
+export default async function play(
     client,
     int,
     data,

@@ -1,4 +1,4 @@
-module.exports = class ChannelDelete extends Event {
+export default class ChannelDelete extends Event {
     constructor() {
         super({
             name: "channelDelete",

@@ -1,4 +1,4 @@
-module.exports = class GuildDelete extends Event {
+export default class GuildDelete extends Event {
     constructor() {
         super({
             name: "guildDelete",
