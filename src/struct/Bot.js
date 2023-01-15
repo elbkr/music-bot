@@ -1,5 +1,5 @@
 import {Client, Collection, GatewayIntentBits, Partials, Routes, REST} from "discord.js";
-import pkgm from "mongoose";
+import pkgm, { set } from "mongoose";
 const { connect, connection } = pkgm
 
 const db = connection
@@ -16,6 +16,7 @@ import Logger from "../utils/Logger.js";
 import guildsData from "../models/Guilds.js"
 import player from "../player/index.js";
 import { client } from '../../index.js'
+import fs from "node:fs"
 
 export default class Bot extends Client {
     constructor() {
@@ -63,6 +64,7 @@ export default class Bot extends Client {
 
     /* Start database */
     async loadDatabase() {
+        set('strictQuery', true)
         return connect(process.env.MONGO, {
             useNewUrlParser: true, useUnifiedTopology: true
         });
@@ -78,6 +80,23 @@ export default class Bot extends Client {
 
     /* Start database */
     async loadEmotes(guild) {
+        if (!guild.emotes) {
+            fs.readdirSync("resource/emojis").forEach(async image => {
+                const emojiURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${image}?raw=true` 
+                await guild.emojis.create({ attachment: emojiURL, name: image.slice(0, -4) })
+                this.logger.log(`Added: ${image.slice(0, -4)}`, { tag: "Emotes" })
+            })
+        }
+        /* Uncomment this line if you would like to de-register all emotes (Will Delete ALL Emojis on the Server!)
+        guild.emojis.fetch().then(async emojis => {
+            this.emotes.clear()
+            emojis.forEach(async emoji => {
+            await guild.emojis.delete(emoji, "Requested by Bot Owner")
+            this.logger.log(`Deleted: ${emoji.name}`, { tag: "Emotes" })
+            })
+        })
+        */
+
         if (guild) {
             await guild.emojis.fetch().then(emojis => {
 
