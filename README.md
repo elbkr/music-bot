@@ -52,22 +52,25 @@
 
 https://discord.com/api/oauth2/authorize?client_id=REPLACE_THIS&permissions=8&scope=applications.commands%20bot
 
-### Connecting to mongo DB
-1. Login or register into [Mongo DB](https://account.mongodb.com/account/login)
+### Connecting to Mongo DB
+1. Log in or register into [Mongo DB](https://account.mongodb.com/account/login)
 2. Create a cluster and complete the configuration
-3. Get the connection url by pressing on `connect < connect your application`
+3. Get the connection URL by pressing on `connect < connect your application`
 4. Replace the `password` with your database access password
-5. Paste the URL into `.env` file  at `MONGO` line
+5. Paste the URL into the `.env` file  at the `MONGO` line
 
 *The URL looks like this:* `mongodb+srv://username:password@clusterName.pjxpv.mongodb.net/MyFirstDatabase?retryWrites=true&w=majority`
 
 ### Setting up emojis:
-1. Download the emojis from `resource/emojis` folder
+#### Automatic
+Run the bot and the emojis will be automatically registered. 
+#### Manual (Not Recommended)
+1. Download the emojis from the `resource``/emojis`` folder
 2. Add the emojis **with the same name** to a server that the BOT can access and won't leave
 3. Copy the server ID
-4. Paste the server ID into `.env` file at `EMOJIS_GUILD_ID` line
+4. Paste the server ID into the `.env` file at the `EMOJIS_GUILD_ID` line
 
-- You can also use your own emojis, but it could cause errors. In that case you have to add them with the same names as the ones in `resource/emojis` folder
+- You can also use your emojis, but it could cause errors. In that case, you have to add them with the same names as the ones in `resource/emojis` folder
 
 ### .ENV Output
 After the configuration, the `.env` file should look like this:
@@ -83,15 +86,15 @@ EMOJIS_GUILD_ID=831236275162972180
 
 ## Free hosting
 1. Local host
-   After the configuration, run `node .` in the terminal (not recommended)
+   After the configuration, run `node`` .` in the terminal (not recommended)
    - It turns off when you turn off the PC
 2. Heroku
    - After the configuration, add the files to a GitHub repository
-   - Login or register in [Heroku](https://id.heroku.com/login)
+   - Log in or register in [Heroku](https://id.heroku.com/login)
    - Create a new app
-   - In `deploy` section, press `Connect to GitHub`
+   - In the `deploy` section, press `Connect to GitHub`
    - After connecting, search for the repository and press `connect`
    - Press **Enable automatic deploys** (optional)
    - Click **Deploy Branch**
-   - Go to `Resources` section
-   - Disable the `web` type and enable `worker` type
+   - Go to the `Resources` section
+   - Disable the `web` type and enable the `worker` type

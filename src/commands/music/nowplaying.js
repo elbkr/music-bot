@@ -1,6 +1,6 @@
 import sf from "seconds-formater";
 import progressBar from "../../player/functions/progress-bar/index.js";
-import msToSeconds from "../../utils/Utils.js";
+import Util from "../../utils/Utils.js";
 
 export default class NowPlaying extends Interaction {
     constructor() {
@@ -60,7 +60,7 @@ export default class NowPlaying extends Interaction {
         let total = song.milliseconds;
         let stream = queue.connection.player._state.resource.playbackDuration;
 
-        let seconds = msToSeconds(stream);
+        let seconds = Util.msToSeconds(stream);
         let time;
         if (seconds === 86400) {
             time = sf.convert(seconds).format("D day");
