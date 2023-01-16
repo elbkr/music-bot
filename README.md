@@ -65,7 +65,7 @@ https://discord.com/api/oauth2/authorize?client_id=REPLACE_THIS&permissions=8&sc
 #### Automatic
 Run the bot and the emojis will be automatically registered. 
 #### Manual (Not Recommended)
-1. Download the emojis from the `resource``/emojis`` folder
+1. Download the emojis from the `resource/emojis` folder
 2. Add the emojis **with the same name** to a server that the BOT can access and won't leave
 3. Copy the server ID
 4. Paste the server ID into the `.env` file at the `EMOJIS_GUILD_ID` line
@@ -86,7 +86,7 @@ EMOJIS_GUILD_ID=831236275162972180
 
 ## Free hosting
 1. Local host
-   After the configuration, run `node`` .` in the terminal (not recommended)
+   After the configuration, run `node .` in the terminal (not recommended)
    - It turns off when you turn off the PC
 2. Heroku
    - After the configuration, add the files to a GitHub repository
