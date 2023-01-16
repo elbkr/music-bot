@@ -80,13 +80,6 @@ export default class Bot extends Client {
 
     /* Start database */
     async loadEmotes(guild) {
-        if (!guild.emotes) {
-            fs.readdirSync("resource/emojis").forEach(async image => {
-                const emojiURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${image}?raw=true` 
-                await guild.emojis.create({ attachment: emojiURL, name: image.slice(0, -4) })
-                this.logger.log(`Added: ${image.slice(0, -4)}`, { tag: "Emotes" })
-            })
-        }
         /* Uncomment this line if you would like to de-register all emotes (Will Delete ALL Emojis on the Server!)
         guild.emojis.fetch().then(async emojis => {
             this.emotes.clear()
@@ -98,9 +91,28 @@ export default class Bot extends Client {
         */
 
         if (guild) {
-            await guild.emojis.fetch().then(emojis => {
+            let emotesArr = [
+                'apple_music', 'fav',
+                'line',        'looped',
+                'noloop',      'nomic',
+                'notfound',    'pause',
+                'play',        'queue',
+                'replay',      'resume',
+                'search',      'shuffle',
+                'skip',        'slider',
+                'spotify',     'stop',
+                'vol_high',    'vol_low',
+                'vol_mid',     'vol_mute',
+                'youtube',     'youtube_music'
+                ]
 
+            await guild.emojis.fetch().then(emojis => {
                 emojis.forEach(e => {
+                    emotesArr = emotesArr.reduce((acc, curr) => {
+                        if (curr !== e.name) acc.push(curr)
+                        return acc
+                      }, [])
+
                     if (e.name.includes("_")) {
                         let name = e.name.replace("_", "-")
                         if (e.animated) {
@@ -115,7 +127,22 @@ export default class Bot extends Client {
                             this.emotes.set(e.name, `<:${e.identifier}>`);
                         }
                     }
-                })
+                })       
+
+                if (emotesArr.length > 0) {
+                    let emoteURL;
+                    this.logger.log(`${emotesArr.length} Emotes are not registered! Adding them now...`, { tag: "Emotes" })
+                    emotesArr.forEach(async emote => {
+                        if (emote === "slider") {
+                            emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${emote}.gif?raw=true`
+                            try { guild.emojis.create({ attachment: emoteURL, name: emote }); this.logger.log(`Added Emote ${emote}`, { tag: "Emotes" }) } catch (error) { this.logger.error(`Unable to load Emote ${emote}!\n${error.stack ? error + "\n\n" + error.stack : error}`, { tag: "Emotes", });
+}
+                        } else {
+                            emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${emote}.png?raw=true`
+                            try { guild.emojis.create({ attachment: emoteURL, name: emote }); this.logger.log(`Added Emote ${emote}`, { tag: "Emotes" }) } catch (error) { this.logger.error(`Unable to load Emote ${emote}!\n${error.stack ? error + "\n\n" + error.stack : error}`, { tag: "Emotes", });
+                        }
+                     }})
+                }
             })
 
         }
