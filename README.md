@@ -86,7 +86,7 @@ EMOJIS_GUILD_ID=831236275162972180
 
 ## Free hosting
 1. Local host
-   After the configuration, run `node .` in the terminal (not recommended)
+   - After the configuration, run `node .` in the terminal (not recommended)
    - It turns off when you turn off the PC
 2. Heroku
    - After the configuration, add the files to a GitHub repository
