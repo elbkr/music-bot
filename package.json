@@ -43,7 +43,7 @@
     "mongoose": "^6.4.5",
     "pretty-ms": "^8.0.0",
     "seconds-formater": "^1.2.0",
-    "utf-8-validate": "^5.0.9",
+    "utf-8-validate": "^6.0.1",
     "util": "^0.12.4"
   }
 }
