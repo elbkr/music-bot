@@ -159,7 +159,7 @@ export default class Bot extends Client {
 
     /* Load slash commands for each guild */
     async loadInteractions(guildId) {
-        const intFile = await sync(resolve("./src/commands/**/*.js"));
+        const intFile = sync(resolve("./src/commands/**/*.js"));
         let data = []
         for (let filepath of intFile) {
             filepath = pathToFileURL(filepath)
@@ -190,7 +190,7 @@ export default class Bot extends Client {
 
     /* Load events */
     async loadEvents() {
-        const evtFile = await sync(resolve("./src/events/**/*.js"));
+        const evtFile = sync(resolve("./src/events/**/*.js"));
             evtFile.forEach(async (filepath) => {
             filepath = pathToFileURL(filepath)
             let File = await import(filepath);
