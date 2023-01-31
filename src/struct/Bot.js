@@ -105,7 +105,6 @@ export default class Bot extends Client {
                 'vol_mid',     'vol_mute',
                 'youtube',     'youtube_music'
                 ]
-
             await guild.emojis.fetch().then(emojis => {
                 emojis.forEach(e => {
                     emotesArr = emotesArr.reduce((acc, curr) => {
@@ -130,18 +129,21 @@ export default class Bot extends Client {
                 })       
 
                 if (emotesArr.length > 0) {
-                    let emoteURL;
+                    let emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/`;
                     this.logger.log(`${emotesArr.length} Emotes are not registered! Adding them now...`, { tag: "Emotes" })
                     emotesArr.forEach(async emote => {
+                        emoteURL += emote
                         if (emote === "slider") {
-                            emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${emote}.gif?raw=true`
+                            emoteURL += ".gif?raw=true"
                             try { guild.emojis.create({ attachment: emoteURL, name: emote }); this.logger.log(`Added Emote ${emote}`, { tag: "Emotes" }) } catch (error) { this.logger.error(`Unable to load Emote ${emote}!\n${error.stack ? error + "\n\n" + error.stack : error}`, { tag: "Emotes", });
 }
                         } else {
-                            emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/${emote}.png?raw=true`
+                            emoteURL += ".png?raw=true"
                             try { guild.emojis.create({ attachment: emoteURL, name: emote }); this.logger.log(`Added Emote ${emote}`, { tag: "Emotes" }) } catch (error) { this.logger.error(`Unable to load Emote ${emote}!\n${error.stack ? error + "\n\n" + error.stack : error}`, { tag: "Emotes", });
                         }
-                     }})
+                     }
+                    emoteURL = `https://github.com/elbkr/music-bot/blob/main/resource/emojis/`;
+                    })
                 }
             })
 
