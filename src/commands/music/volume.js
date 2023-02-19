@@ -78,11 +78,11 @@ export default class Volume extends Interaction {
     let emoji;
     if (volume === 0) {
       emoji = this.client.emotes.get("vol-mute");
-    } else if (volume > 0 && volume <= 33) {
+    } else if (volume > 0 && volume <= 66) {
       emoji = this.client.emotes.get("vol-low");
-    } else if (volume > 33 && volume <= 66) {
+    } else if (volume > 66 && volume <= 132) {
       emoji = this.client.emotes.get("vol-mid");
-    } else if (volume > 66 && volume < 100) {
+    } else if (volume > 132 && volume < 200) {
       emoji = this.client.emotes.get("vol-high");
     }
 
