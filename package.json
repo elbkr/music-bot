@@ -37,7 +37,7 @@
     "discordjs-button-pagination": "^3.0.1",
     "dotenv": "^16.0.1",
     "fs": "^0.0.1-security",
-    "glob": "^7.2.0",
+    "glob": "^9.2.1",
     "isomorphic-unfetch": "^4.0.2",
     "moment": "^2.29.4",
     "mongoose": "^6.4.5",
