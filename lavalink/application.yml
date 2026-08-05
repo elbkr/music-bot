@@ -1,0 +1,105 @@
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  plugins:
+    # YouTube support — removed from Lavalink core in v4, must be added back.
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
+    # Spotify / Apple Music / Deezer support.
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
+
+  server:
+    password: "youshallnotpass"
+    sources:
+      # MUST be false — the youtube-plugin above replaces the deprecated
+      # built-in source. Leaving this true causes conflicts.
+      youtube: false
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      http: true
+      local: false
+    filters:
+      volume: true
+      equalizer: true
+      karaoke: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+      distortion: true
+      rotation: true
+      channelMix: true
+      lowPass: true
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    youtubePlaylistLoadLimit: 6
+    playerUpdateInterval: 5
+    youtubeSearchEnabled: true
+    soundcloudSearchEnabled: true
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # Client order matters. MUSIC first gives YouTube Music results (official
+    # audio) rather than music videos / remixes / extended edits — the same
+    # accuracy goal we were chasing before the pivot, now handled server-side.
+    clients:
+      - MUSIC
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
+
+  lavasrc:
+    sources:
+      spotify: true
+      applemusic: true
+      deezer: false
+      yandexmusic: false
+      flowerytts: false
+      youtube: true
+    providers:
+      # How a Spotify/Apple Music track is resolved into a playable stream.
+      # ytmsearch first keeps playback on YouTube Music (official audio).
+      - "ytmsearch:\"%ISRC%\""
+      - "ytmsearch:%QUERY%"
+      - "ytsearch:\"%ISRC%\""
+      - "ytsearch:%QUERY%"
+    spotify:
+      clientId: "YOUR_SPOTIFY_CLIENT_ID"
+      clientSecret: "YOUR_SPOTIFY_CLIENT_SECRET"
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+      # Spotify's February 2026 API change moved playlist/metadata endpoints
+      # off the Client Credentials flow (clientId/clientSecret above), so
+      # playlist reads now 401 with "Valid user authentication required"
+      # even with valid credentials. preferPartnerApi routes those requests
+      # through Spotify's web-player-internal API instead, authenticated via
+      # customTokenEndpoint. See LAVALINK_SETUP.md step 4b — this requires
+      # running the spotify-tokener companion service.
+      preferPartnerApi: true
+      customTokenEndpoint: "http://localhost:8080/api/token"
+    applemusic:
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+
+logging:
+  level:
+    root: INFO
+    lavalink: INFO
+  file:
+    path: ./logs/
