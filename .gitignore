@@ -1,3 +1,7 @@
+# Lavalink server binary + downloaded plugins — not source, see LAVALINK_SETUP.md
+lavalink/Lavalink.jar
+lavalink/plugins/
+
 # Logs
 logs
 *.log
