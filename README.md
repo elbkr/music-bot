@@ -134,7 +134,11 @@ https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&
 
 ### 3. Configure environment variables
 
-Create a `.env` file in the project root:
+Copy the template and fill in your own values:
+
+```bash
+cp .env.example .env
+```
 
 ```env
 TOKEN=your-discord-bot-token
